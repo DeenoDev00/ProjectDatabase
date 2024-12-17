@@ -1,7 +1,11 @@
 package se.iths.java24;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import se.iths.java24.entity.Country;
+
+import java.util.List;
+import java.util.Scanner;
 
 import static se.iths.java24.JPAUtil.getEntityManager;
 import static se.iths.java24.JPAUtil.inTransaction;
@@ -15,33 +19,37 @@ public class Main {
         System.out.println("Add city to country");
         cities.addCityToCountry("Kalmar", 60000, "Sweden");
 
-//        System.out.print("Enter search term: ");
-//        Scanner scanner = new Scanner(System.in);
-//        String name = scanner.nextLine();
+//       System.out.print("Enter search term: ");
+//       Scanner scanner = new Scanner(System.in);
+//      String name = scanner.nextLine();
 //
-//        // Validate user input
-//        if (name == null || name.isEmpty()) {
-//            System.out.println("Invalid input.");
-//            return;
-//        }
+//       // Validate user input
+//       if (name == null || name.isEmpty()) {
+//           System.out.println("Invalid input.");
+//           return;
+//       }
 //
-//        //JPQL
-//        String queryStr = "SELECT c FROM Country c WHERE c.countryName =:name";
-//        TypedQuery<Country> query = em.createQuery(queryStr, Country.class);
-//        query.setParameter("name", name);
-//        List<Country> countries = query.getResultList();
-//        countries.forEach(System.out::println);
+      //JPQL
+      //String queryStr = "SELECT c FROM Country c WHERE c.countryName =:name";
+      //TypedQuery<Country> query = em.createQuery(queryStr, Country.class);
+       //query.setParameter("name", name);
+       //List<Country> countries = query.getResultList();
+      //countries.forEach(System.out::println);
 
         //Create new country
         Country country = new Country();
         country.setCountryName("Poland");
         country.setCountryCode("pl");
 
-//        var transaction = em.getTransaction();
-//        transaction.begin();
-//        em.persist(country);
-//        transaction.commit();
-//        em.close();
+        var transaction = em.getTransaction();
+        transaction.begin();
+        em.persist(country);
+        transaction.commit();
+        em.close();
+
+        JPAUtil.inTransaction(entityManager -> {
+            entityManager.persist(country);
+        });
 
         //Create
         try {
