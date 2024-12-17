@@ -10,7 +10,7 @@
     <module>hibernate</module>
     <module>jpa</module>
   </modules>
-
+c
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>23</maven.compiler.release>
