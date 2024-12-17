@@ -2,10 +2,13 @@
 <persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
-    <persistence-unit name="jpa-hibernate-mysql">
+    <persistence-unit name="myPersistenceUnit">
+        <class>se.iths.java24.entity.Student</class>
+        <class>se.iths.java24.entity.ClassYear</class>
+        <class>se.iths.java24.entity.Program</class>
+        <class>se.iths.java24.entity.Course</class>
+        <class>se.iths.java24.entity.Professor</class>
 
-        <class>se.iths.java24.entity.Country</class>
-        <class>se.iths.java24.entity.City</class>
 
         <properties>
             <!-- Database connection settings -->
