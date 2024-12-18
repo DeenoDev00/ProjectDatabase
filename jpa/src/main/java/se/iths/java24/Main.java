@@ -3,14 +3,17 @@ package se.iths.java24;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import se.iths.java24.entity.ClassYear;
-import se.iths.java24.entity.Course;
-import se.iths.java24.entity.Professor;
-import se.iths.java24.entity.Student;
+import se.iths.java24.entity.*;
+import se.iths.java24.repository.ClassYearService;
+import se.iths.java24.repository.ProfessorService;
+import se.iths.java24.repository.ProgramService;
 import se.iths.java24.repository.StudentService;
 //import se.iths.java24.repository.StudentService;
 
+import java.sql.SQLOutput;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Main {
      public static void main(String[] args) {
@@ -21,18 +24,19 @@ public class Main {
 while(running){
     System.out.println("Choose one of the tables:");
     System.out.println("1. Professor");
-    System.out.println("2. Program");
+    System.out.println("2. Student");
     System.out.println("3. ClassYear");
-    System.out.println("4. Course");
-    System.out.println("5. Student");
+    System.out.println("4. Program");
+    System.out.println("5. Course");
     System.out.println("0. Exit");
 
     int choice = scanner.nextInt();
 
     switch (choice){
-        case 1 -> handleProfessor();
+        case 1 -> professorMenu(scanner);
         case 2 -> studentMenu(scanner);
-        //case 3 -> ClassYear();
+        case 3 -> classYearMenu(scanner);
+        case 4 -> programMenu(scanner);
         //case 4 -> Course();
         //case 5 -> Student();
         case 0 -> {
@@ -47,45 +51,7 @@ while(running){
 
 
 
-    private static void handleProfessor(){
-        EntityManager em = JPAUtil.getEntityManager();
-        Scanner scanner = new Scanner(System.in);
-        em.getTransaction().begin();
 
-
-        System.out.println("First name: ");
-        String firstName = scanner.nextLine();
-
-        System.out.println("Last name: ");
-        String lastName = scanner.nextLine();
-
-        System.out.println("Email: ");
-        String email = scanner.nextLine();
-
-        System.out.println("Years of expertise: ");
-        int yearsOfExpertise = scanner.nextInt();
-
-        Professor professor = new Professor();
-        professor.setForename(firstName);
-        professor.setSurname(lastName);
-        professor.setProfessorEmail(email);
-        professor.setYearsOfExpertise(yearsOfExpertise);
-
-        try {
-            em.getTransaction().begin();
-            em.persist(professor);
-            em.getTransaction().commit();
-            System.out.println("Professor sparad i databasen!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-            //emf.close();
-        }
-
-
-    }
 
     public static void studentMenu(Scanner scanner){
         boolean back = false;
@@ -151,6 +117,222 @@ while(running){
             }
         }
     }
+
+    public static void classYearMenu(Scanner scanner) {
+        boolean back = false;
+
+        while (!back) {
+            System.out.println("ClassYear CRUD-meny:");
+            System.out.println("1. Lägg till årskurs");
+            System.out.println("2. Visa alla årskurser");
+            System.out.println("3. Uppdatera årskurs");
+            System.out.println("4. Ta bort årskurs");
+            System.out.println("5. Tillbaka");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Konsumera newline
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Ange namn på årskurs:");
+                    String classPeriod = scanner.nextLine();
+                    ClassYear classYear = new ClassYear(classPeriod);
+                    ClassYearService.addClassYear(classYear);
+                    break;
+
+                case 2:
+                    ClassYearService.viewAllClassYears();
+
+                case 3:
+                    System.out.println("Ange ID på årskurs att uppdatera:");
+                    int updateId = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Ange uppdaterat årtal:");
+                    String newYearName = scanner.nextLine();
+                    ClassYearService.updateClassYear(updateId, newYearName);
+                    break;
+
+                case 4:
+                    System.out.println("Ange ID på årskurs att ta bort:");
+                    int deleteId = scanner.nextInt();
+                    ClassYearService.deleteClassYear(deleteId);
+                    break;
+
+                case 5:
+                    back = true;
+                    break;
+
+                default:
+                    System.out.println("Ogiltigt val.");
+            }
+        }
+    }
+
+    public static void professorMenu(Scanner scanner) {
+        boolean back = false;
+
+        while (!back) {
+            System.out.println("Student CRUD-meny:");
+            System.out.println("1. Lägg till professor");
+            System.out.println("2. Visa alla professorer");
+            System.out.println("3. Uppdatera professor");
+            System.out.println("4. Ta bort professor");
+            System.out.println("5. Tillbaka");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Konsumera newline
+
+            switch (choice) {
+                case 1:
+                    //CREATE
+                    System.out.println("Ange förnamn: ");
+                    String forename = scanner.nextLine();
+                    System.out.println("Ange efternamn: ");
+                    String surname = scanner.nextLine();
+                    System.out.println("Ange år av erfarenhet: ");
+                    int yearsOfExpertise = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Ange e-post: ");
+                    String email = scanner.nextLine();
+                    System.out.println("Ange ProgramID");
+                    int programId = scanner.nextInt();
+                    scanner.nextLine();
+
+
+
+
+                    Professor professor = new Professor(forename, surname, yearsOfExpertise, email, programId);
+                    ProfessorService.addProffessor(professor);
+                    break;
+
+                case 2:
+                    //READ
+                    var professors = ProfessorService.getAllProfessors();
+
+                    for (Professor s : professors) {
+                        System.out.println("Professor First name: " +s.getForename() + " Surname: "+s.getSurname());
+                        System.out.println("Professor Email: " +s.getprofessorEmail());
+                        //System.out.println("Professor Class: " +s.getProgramProfessor());
+                        System.out.println("Professor Years of expertice " +s.getYearsOfExpertise());
+                        System.out.println("===");
+                    }
+                    break;
+
+                case 3:
+                    //UPDATE
+                    System.out.println("Ange Professorns ID att uppdatera:");
+                    int updateId = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Ange nytt betyg:");
+                    String newEmail = scanner.nextLine();
+                    ProfessorService.updateProfessor(updateId, newEmail);
+                    break;
+                case 4:
+                    //DELETE
+                    System.out.println("Ange professor ID att ta bort:");
+                    int deleteId = scanner.nextInt();
+                    ProfessorService.deleteProfessor(deleteId);
+                    break;
+                case 5:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Ogiltigt val.");
+            }
+        }
+
+
+    }
+
+    public static void programMenu(Scanner scanner){
+        boolean back = false;
+
+        while (!back) {
+            System.out.println("Program CRUD-meny:");
+            System.out.println("1. Lägg till Program");
+            System.out.println("2. Visa alla årskurser");
+            System.out.println("3. Uppdatera årskurs");
+            System.out.println("4. Ta bort årskurs");
+            System.out.println("5. Tillbaka");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Konsumera newline
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Ange namn på Program:");
+                    String programName = scanner.nextLine();
+
+                    System.out.println("Ange behörighet:");
+                    String requirement = scanner.nextLine();
+
+                    System.out.println("Ange max kapacitet:");
+                    int maxCapacity = scanner.nextInt();
+                    scanner.nextLine(); // Rensa scanner-bufferten
+
+                    // Visa alla befintliga professorer
+                    System.out.println("Befintliga professorer:");
+                    List<Professor> professors = ProfessorService.getAllProfessors();
+                    for (Professor professor : professors) {
+                        System.out.println(professor.getProfessorID() + ": " + professor.getForename() + " " + professor.getSurname());
+                    }
+
+                    // Be användaren välja professor
+                    System.out.println("Ange ID för professor som ska kopplas till programmet:");
+                    int professorID = scanner.nextInt();
+                    scanner.nextLine(); // Rensa scanner-bufferten
+
+                    // Kontrollera att professor med valt ID finns
+                    Professor chosenProfessor = professors.stream()
+                            .filter(professor -> professor.getProfessorID() == professorID)
+                            .findFirst()
+                            .orElse(null);
+
+                    if (chosenProfessor == null) {
+                        System.out.println("Ogiltigt professor-ID. Programmet skapades inte.");
+                        break;
+                    }
+
+                    // Skapa och spara programmet
+                    Program program = new Program(programName, requirement, maxCapacity, chosenProfessor);
+                    ProgramService.addProgram(program);
+                    break;
+
+                case 2:
+                    ProgramService.viewAllPrograms();
+                    break;
+
+                case 3:
+                    System.out.println("Ange ID på program att uppdatera:");
+                    int programId = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Ange uppdaterat årtal:");
+                    int newMaxCapacity = Integer.parseInt(scanner.nextLine());
+                    ProgramService.updateProgram(programId, newMaxCapacity);
+                    break;
+
+                case 4:
+                    System.out.println("Ange ID på årskurs att ta bort:");
+                    int deleteId = scanner.nextInt();
+                    ProgramService.deleteProgram(deleteId);
+                    break;
+
+                case 5:
+                    back = true;
+                    break;
+
+                default:
+                    System.out.println("Ogiltigt val.");
+            }
+        }
+
+    }
+
+
+
+
+
+
 }
 
 

@@ -19,7 +19,20 @@ public class ClassYear {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ClassProgramID", nullable = false)
+
+
+
+
+
     private Program classProgramID;
+
+    public ClassYear(String classPeriod) {
+        this.classPeriod = classPeriod;
+    }
+
+    public ClassYear() {
+
+    }
 
     public Integer getId() {
         return id;

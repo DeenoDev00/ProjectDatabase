@@ -1,6 +1,10 @@
 package se.iths.java24.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Professor", schema = "demo")
@@ -10,28 +14,48 @@ public class Professor {
     @Column(name = "ProfessorID", nullable = false)
     private Integer id;
 
-    @jakarta.validation.constraints.Size(max = 50)
+    @Size(max = 50)
     @Column(name = "Forename", length = 50)
     private String forename;
 
-    @jakarta.validation.constraints.Size(max = 50)
+    @Size(max = 50)
     @Column(name = "Surname", length = 50)
     private String surname;
 
-    @jakarta.validation.constraints.Size(max = 50)
+    @Size(max = 50)
     @Column(name = "ProfessorEmail", length = 50)
     private String professorEmail;
 
     @Column(name = "YearsOfExpertise")
     private Integer yearsOfExpertise;
 
+    @OneToMany(mappedBy = "professor")
+    private Set<Program> programs = new LinkedHashSet<>();
+
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public Professor(String forename, String surname, int yearsOfExpertise, String email,int programId){
+        this.forename = forename;
+        this.surname = surname;
+        this.yearsOfExpertise = yearsOfExpertise;
+        this.professorEmail = email;
+        this.id = programId;
+    }
+
+    public int getProfessorID(){
+        return this.id;
+    }
+
+    public void setProfessorID(int id){
         this.id = id;
     }
+
+    public String getprofessorEmail() {
+        return professorEmail;
+    }
+
 
     public String getForename() {
         return forename;
@@ -64,5 +88,17 @@ public class Professor {
     public void setYearsOfExpertise(Integer yearsOfExpertise) {
         this.yearsOfExpertise = yearsOfExpertise;
     }
+
+    public Set<Program> getPrograms() {
+        return programs;
+    }
+
+    public void setPrograms(Set<Program> programs) {
+        this.programs = programs;
+    }
+
+    // Default-konstruktor krävs av JPA
+    public Professor() {}
+
 
 }

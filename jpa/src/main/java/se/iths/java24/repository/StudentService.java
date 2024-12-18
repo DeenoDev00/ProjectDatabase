@@ -27,11 +27,11 @@ public class StudentService {
     }
 
     // Read
-    public static List<Student> getAllStudents() {
-        try(EntityManager entityManager = JPAUtil.getEntityManager()) {
-            return entityManager.createQuery("SELECT s FROM Student s", Student.class).getResultList();
+        public static List<Student> getAllStudents() {
+            try(EntityManager entityManager = JPAUtil.getEntityManager()) {
+                return entityManager.createQuery("SELECT s FROM Student s", Student.class).getResultList();
+            }
         }
-    }
 
     // Update
     public static void updateStudent(int studentId, String newGrade) {

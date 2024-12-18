@@ -25,10 +25,23 @@
         @jakarta.validation.constraints.NotNull
         @ManyToOne(fetch = FetchType.LAZY, optional = false)
         @JoinColumn(name = "ProgramProfessor", nullable = false)
-        private Professor programProfessor;
+        private Professor professor;
+
+        public Program() {
+
+        }
+
 
         public Integer getId() {
             return id;
+        }
+
+
+        public Program(String programName, String requirement, int maxCapacity, Professor professor) {
+            this.programName = programName;
+            this.requirement = requirement;
+            this.maxCapacity = maxCapacity;
+            this.professor = professor;
         }
 
         public void setId(Integer id) {
@@ -60,11 +73,9 @@
         }
 
         public Professor getProgramProfessor() {
-            return programProfessor;
+            return professor;
         }
-
-        public void setProgramProfessor(Professor programProfessor) {
-            this.programProfessor = programProfessor;
+        public void setProgramProfessor(Professor professor) {
+            this.professor = professor;
         }
-
     }
