@@ -7,6 +7,8 @@ import se.iths.java24.entity.ClassYear;
 import se.iths.java24.entity.Professor;
 import se.iths.java24.entity.Program;
 
+import java.util.List;
+
 public class ProgramService {
 
         //CREATE
@@ -95,6 +97,18 @@ public class ProgramService {
             }
         }
 
-
+    public static List<Program> getAllPrograms() {
+        try (EntityManager entityManager = JPAUtil.getEntityManager()) {
+            return entityManager.createQuery("SELECT p FROM Program p", Program.class).getResultList();
+        }
     }
+
+
+    public static Program getProgramById(Long id) {
+        try (EntityManager entityManager = JPAUtil.getEntityManager()) {
+            return entityManager.find(Program.class, id);
+        }
+    }
+
+}
 

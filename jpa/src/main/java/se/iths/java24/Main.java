@@ -4,10 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import se.iths.java24.entity.*;
-import se.iths.java24.repository.ClassYearService;
-import se.iths.java24.repository.ProfessorService;
-import se.iths.java24.repository.ProgramService;
-import se.iths.java24.repository.StudentService;
+import se.iths.java24.repository.*;
 //import se.iths.java24.repository.StudentService;
 
 import java.sql.SQLOutput;
@@ -37,8 +34,7 @@ while(running){
         case 2 -> studentMenu(scanner);
         case 3 -> classYearMenu(scanner);
         case 4 -> programMenu(scanner);
-        //case 4 -> Course();
-        //case 5 -> Student();
+        case 5 -> courseMenu(scanner);
         case 0 -> {
             System.out.println("Exits the program");
             running = false;
@@ -194,7 +190,7 @@ while(running){
                     scanner.nextLine();
                     System.out.println("Ange e-post: ");
                     String email = scanner.nextLine();
-                    System.out.println("Ange ProgramID");
+                    System.out.println("Ange ProgramID"); // Här kan bli problem
                     int programId = scanner.nextInt();
                     scanner.nextLine();
 
@@ -315,6 +311,87 @@ while(running){
                     System.out.println("Ange ID på årskurs att ta bort:");
                     int deleteId = scanner.nextInt();
                     ProgramService.deleteProgram(deleteId);
+                    break;
+
+                case 5:
+                    back = true;
+                    break;
+
+                default:
+                    System.out.println("Ogiltigt val.");
+            }
+        }
+
+    }
+
+    public static void courseMenu(Scanner scanner){
+        boolean back = false;
+
+        while (!back) {
+            System.out.println("Course CRUD-meny:");
+            System.out.println("1. Lägg till kurs");
+            System.out.println("2. Visa alla kurser");
+            System.out.println("3. Uppdatera kurs");
+            System.out.println("4. Ta bort kurs");
+            System.out.println("5. Tillbaka");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Konsumera newline
+
+            switch (choice) {
+                case 1:
+                    //CREATE
+                    System.out.println("Ange namn på ny kurs:");
+                    String courseName = scanner.nextLine();
+
+                    // Lista alla befintliga program (för att välja ett)
+                    System.out.println("Tillgängliga program:");
+                    List<Program> programs = ProgramService.getAllPrograms(); // En metod för att hämta alla program
+                    for (Program program : programs) {
+                        System.out.println(program.getId() + ": " + program.getProgramName());
+                    }
+
+                    // Låt användaren välja ett program
+                    System.out.println("Ange ID för programmet som kursen ska kopplas till:");
+                    Long programId = scanner.nextLong();
+                    scanner.nextLine(); // Konsumera ny rad
+
+                    // Hämta programmet från databasen
+                    Program selectedProgram = ProgramService.getProgramById(programId); // En metod för att hämta program baserat på ID
+                    if (selectedProgram == null) {
+                        System.out.println("Ogiltigt program-ID. Försök igen.");
+                        break;
+                    }
+
+                    Course course = new Course(courseName);
+                    course.setProgram(selectedProgram);
+
+                    CourseService.addCourse(course);
+                    break;
+//                    Course course = new Course(courseName);
+//                    CourseService.addCourse(course);
+//                    break;
+
+                case 2:
+                    //READ
+                    CourseService.viewAllCourses();
+                    break;
+
+                case 3:
+                    //UPDATE
+                    System.out.println("Ange ID på kursen som ska uppdateras:");
+                    int updateId = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Ange uppdaterat kursnamn:");
+                    String newCourseName = scanner.nextLine();
+                    CourseService.updateCourse(updateId, newCourseName);
+                    break;
+
+                case 4:
+                    //DELETE
+                    System.out.println("Ange ID på kurs att ta bort:");
+                    int deleteId = scanner.nextInt();
+                    CourseService.deleteCourse(deleteId);
                     break;
 
                 case 5:
