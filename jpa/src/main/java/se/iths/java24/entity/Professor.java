@@ -36,12 +36,11 @@ public class Professor {
         return id;
     }
 
-    public Professor(String forename, String surname, int yearsOfExpertise, String email,int programId){
+    public Professor(String forename, String surname, int yearsOfExpertise, String email){
         this.forename = forename;
         this.surname = surname;
         this.yearsOfExpertise = yearsOfExpertise;
         this.professorEmail = email;
-        this.id = programId;
     }
 
     public int getProfessorID(){

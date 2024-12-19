@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import se.iths.java24.JPAUtil;
 import se.iths.java24.entity.ClassYear;
+import se.iths.java24.entity.Course;
 import se.iths.java24.entity.Student;
 
 import java.util.List;
@@ -93,5 +94,21 @@ public class ClassYearService {
         }
     }
 
+    public static List<ClassYear> getAllClassYears() {
+        try (EntityManager entityManager = JPAUtil.getEntityManager()) {
+            return entityManager.createQuery("SELECT c FROM ClassYear c", ClassYear.class).getResultList();
+        }
+    }
+
+    public static ClassYear getClassYearById(Long id) {
+        try (EntityManager entityManager = JPAUtil.getEntityManager()) {
+            return entityManager.find(ClassYear.class, id);
+        }
+    }
+
+
 
 }
+
+
+

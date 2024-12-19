@@ -26,8 +26,9 @@ public class ClassYear {
 
     private Program classProgramID;
 
-    public ClassYear(String classPeriod) {
+    public ClassYear(String classPeriod, Program classProgramID) {
         this.classPeriod = classPeriod;
+        this.classProgramID = classProgramID;
     }
 
     public ClassYear() {

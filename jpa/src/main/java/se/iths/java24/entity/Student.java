@@ -37,12 +37,13 @@ public class Student {
 
     public Student() {}
 
-    public Student(String forename, String surname, int age, String email, int i) {
+    // Konstruktorn som du använder i din Main
+    public Student(String forename, String surname, Integer age, String email, ClassYear studentClassYear) {
         this.forename = forename;
         this.surname = surname;
         this.studentAge = age;
         this.studentMail = email;
-        this.id = i;
+        this.studentClassYear = studentClassYear;
     }
 
     public Integer getId() {

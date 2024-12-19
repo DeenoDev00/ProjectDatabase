@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import se.iths.java24.JPAUtil;
 import se.iths.java24.entity.Professor;
+import se.iths.java24.entity.Program;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class ProfessorService {
         // Read
         public static List<Professor> getAllProfessors() {
             try(EntityManager entityManager = JPAUtil.getEntityManager()) {
-                return entityManager.createQuery("SELECT s FROM Professor s", Professor.class).getResultList();
+                return entityManager.createQuery("SELECT s FROM Professor s LEFT JOIN FETCH s.programs", Professor.class).getResultList();
             }
         }
 

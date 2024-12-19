@@ -4,6 +4,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import se.iths.java24.JPAUtil;
 import se.iths.java24.entity.Course;
+import se.iths.java24.entity.Program;
+
+import java.util.List;
 
 public class CourseService {
 
@@ -35,8 +38,8 @@ public class CourseService {
                 System.out.println("Inga Kurser hittades.");
             } else {
                 for (Course c : courses) {
-                    System.out.println("ClassYearID: " + c.getId());
-                    System.out.println("ClassPeriod: " + c.getCourseName());
+                    System.out.println("CourseID: " + c.getId());
+                    System.out.println("CourseName: " + c.getCourseName());
                     System.out.println("Program: " + c.getProgram().getProgramName());
                     System.out.println("====");
                 }
