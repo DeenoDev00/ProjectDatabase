@@ -1,6 +1,7 @@
 package se.iths.java24.entity;
 
 import jakarta.persistence.*;
+import se.iths.java24.repository.Grade;
 
 @Entity
 @Table(name = "Student", schema = "demo")
@@ -20,7 +21,11 @@ public class Student {
 
     @jakarta.validation.constraints.Size(max = 50)
     @Column(name = "Grade", length = 50)
-    private String grade;
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
+
+
+
 
     @jakarta.validation.constraints.NotNull
     @Column(name = "StudentAge", nullable = false)
@@ -70,11 +75,11 @@ public class Student {
         this.surname = surname;
     }
 
-    public String getGrade() {
+    public Grade getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Grade grade) {
         this.grade = grade;
     }
 

@@ -41,7 +41,7 @@ public class StudentService {
                 transaction.begin();
                 Student student = entityManager.find(Student.class, studentId);
                 if (student != null) {
-                    student.setGrade(newGrade);
+                    student.setGrade(Grade.valueOf(newGrade));
                     entityManager.merge(student);
                     System.out.println("Student uppdaterad!");
                 } else {

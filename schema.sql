@@ -43,6 +43,8 @@ CREATE TABLE Student
     FOREIGN KEY (StudentClassYear) REFERENCES ClassYear (ClassYearID)
 );
 
+ALTER TABLE Student MODIFY COLUMN Grade ENUM('MVG', 'VG', 'G', 'IG');
+
 -- Lägg in professorer
 INSERT INTO Professor (Forename, Surname, ProfessorEmail, YearsOfExpertise)
 VALUES ('Anna', 'Lindberg', 'anna.lindberg@university.com', 10),
@@ -61,38 +63,38 @@ VALUES ('2023', 1),
        ('2024', 2);
 
 -- Lägg in studenter för UX Designers
+-- UX 2023
 INSERT INTO Student (Forename, Surname, Grade, StudentAge, StudentMail, StudentClassYear)
 VALUES
-    -- UX 2023
-    ('Lisa', 'Andersson', 'A', 20, 'lisa.andersson@school.com', 1),
-    ('Oskar', 'Nilsson', 'B', 21, 'oskar.nilsson@school.com', 1),
-    ('Karin', 'Johansson', 'A', 19, 'karin.johansson@school.com', 1),
-    ('Eva', 'Karlsson', 'B', 22, 'eva.karlsson@school.com', 1),
-    ('Adam', 'Larsson', 'A', 23, 'adam.larsson@school.com', 1),
+    ('Lisa', 'Andersson', 'MVG', 20, 'lisa.andersson@school.com', 1),
+    ('Oskar', 'Nilsson', 'VG', 21, 'oskar.nilsson@school.com', 1),
+    ('Karin', 'Johansson', 'G', 19, 'karin.johansson@school.com', 1),
+    ('Eva', 'Karlsson', 'IG', 22, 'eva.karlsson@school.com', 1),
+    ('Adam', 'Larsson', 'MVG', 23, 'adam.larsson@school.com', 1),
 
     -- UX 2024
-    ('Emma', 'Berg', 'A', 20, 'emma.berg@school.com', 2),
-    ('Lars', 'Holm', 'B', 21, 'lars.holm@school.com', 2),
-    ('Sara', 'Ek', 'A', 19, 'sara.ek@school.com', 2),
-    ('Jonas', 'Persson', 'B', 22, 'jonas.persson@school.com', 2),
-    ('Sophia', 'Eriksson', 'A', 23, 'sophia.eriksson@school.com', 2);
+    ('Emma', 'Berg', 'G', 20, 'emma.berg@school.com', 2),
+    ('Lars', 'Holm', 'VG', 21, 'lars.holm@school.com', 2),
+    ('Sara', 'Ek', 'MVG', 19, 'sara.ek@school.com', 2),
+    ('Jonas', 'Persson', 'G', 22, 'jonas.persson@school.com', 2),
+    ('Sophia', 'Eriksson', 'VG', 23, 'sophia.eriksson@school.com', 2);
 
 -- Lägg in studenter för JavaUtvecklare
 INSERT INTO Student (Forename, Surname, Grade, StudentAge, StudentMail, StudentClassYear)
 VALUES
     -- Java 2023
-    ('Daniel', 'Bengtsson', 'A', 20, 'daniel.bengtsson@school.com', 3),
-    ('Maria', 'Lind', 'B', 21, 'maria.lind@school.com', 3),
-    ('Patrik', 'Sandberg', 'A', 19, 'patrik.sandberg@school.com', 3),
-    ('Helena', 'Åkesson', 'B', 22, 'helena.akesson@school.com', 3),
-    ('Viktor', 'Sjögren', 'A', 23, 'viktor.sjogren@school.com', 3),
+    ('Daniel', 'Bengtsson', 'MVG', 20, 'daniel.bengtsson@school.com', 3),
+    ('Maria', 'Lind', 'G', 21, 'maria.lind@school.com', 3),
+    ('Patrik', 'Sandberg', 'VG', 19, 'patrik.sandberg@school.com', 3),
+    ('Helena', 'Åkesson', 'IG', 22, 'helena.akesson@school.com', 3),
+    ('Viktor', 'Sjögren', 'MVG', 23, 'viktor.sjogren@school.com', 3),
 
     -- Java 2024
-    ('Johan', 'Hedlund', 'A', 20, 'johan.hedlund@school.com', 4),
-    ('Matilda', 'Wahlström', 'B', 21, 'matilda.wahlstrom@school.com', 4),
-    ('Fredrik', 'Nyström', 'A', 19, 'fredrik.nystrom@school.com', 4),
-    ('Camilla', 'Lundberg', 'B', 22, 'camilla.lundberg@school.com', 4),
-    ('Oscar', 'Hansson', 'A', 23, 'oscar.hansson@school.com', 4);
+    ('Johan', 'Hedlund', 'G', 20, 'johan.hedlund@school.com', 4),
+    ('Matilda', 'Wahlström', 'VG', 21, 'matilda.wahlstrom@school.com', 4),
+    ('Fredrik', 'Nyström', 'MVG', 19, 'fredrik.nystrom@school.com', 4),
+    ('Camilla', 'Lundberg', 'G', 22, 'camilla.lundberg@school.com', 4),
+    ('Oscar', 'Hansson', 'IG', 23, 'oscar.hansson@school.com', 4);
 
 -- Lägg in kurser för UX Designers
 INSERT INTO Course (CourseName, CourseProgramID)

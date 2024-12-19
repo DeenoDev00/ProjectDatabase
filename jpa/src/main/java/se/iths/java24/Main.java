@@ -115,7 +115,7 @@ public class Main {
                             System.out.println("Ange studentens ID att uppdatera:");
                             int updateId = scanner.nextInt();
                             scanner.nextLine();
-                            System.out.println("Ange nytt betyg:");
+                            System.out.println("Ange nytt betyg (IG, G, VG, MVG):");
                             String newGrade = scanner.nextLine();
                             StudentService.updateStudent(updateId, newGrade);
                             break;
