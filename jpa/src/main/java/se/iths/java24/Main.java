@@ -5,6 +5,7 @@ import se.iths.java24.repository.*;
 //import se.iths.java24.repository.StudentService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -15,12 +16,13 @@ public class Main {
 
         while (running) {
             System.out.println("Choose one of the tables:");
-            System.out.println("1. Professor");
-            System.out.println("2. Student");
-            System.out.println("3. ClassYear");
-            System.out.println("4. Program");
-            System.out.println("5. Course");
-            System.out.println("6. GradeStatistics");
+            System.out.println("1. Professor CRUD");
+            System.out.println("2. Student CRUD");
+            System.out.println("3. ClassYear CRUD");
+            System.out.println("4. Program CRUD");
+            System.out.println("5. Course CRUD");
+            System.out.println("6. Grade Statistics");
+            System.out.println("7. Class Lists");
             System.out.println("0. Exit");
 
             int choice = scanner.nextInt();
@@ -32,6 +34,7 @@ public class Main {
                 case 4 -> programMenu(scanner);
                 case 5 -> courseMenu(scanner);
                 case 6 -> gradeStatisticsMenu(scanner);
+                case 7 -> studentClassMenu(scanner);
                 case 0 -> {
                     System.out.println("Exits the program");
                     running = false;
@@ -449,13 +452,13 @@ public class Main {
     public static void gradeStatisticsMenu(Scanner scanner) {
         while (true) {
             System.out.println("Välj statistik:");
-            System.out.println("1. Elever med betyget IG");
-            System.out.println("2. Elever med betyget G");
-            System.out.println("3. Elever med betyget VG");
-            System.out.println("4. Elever med betyget MVG");
-            System.out.println("5. Antal elever per betyg");
-            System.out.println("6. Avsluta");
-            System.out.print("Ange ditt val: ");
+            System.out.println("1. Students with grade IG");
+            System.out.println("2. Students with grade G");
+            System.out.println("3. Students with grade VG");
+            System.out.println("4. Students with grade MVG");
+            System.out.println("5. Grade Statistics");
+            System.out.println("6. End");
+            System.out.print("Pick your choice: ");
             int choice = scanner.nextInt();
 
             switch (choice) {
@@ -478,11 +481,65 @@ public class Main {
                     break;
 
                 case 6:
-                    System.out.println("Avslutar...");
+                    System.out.println("Ending...");
                     return;
                 default:
-                    System.out.println("Ogiltigt val, försök igen.");
+                    System.out.println("Not a valid choice. Try again...");
             }
         }
     }
-}
+
+    public static void studentClassMenu(Scanner scanner) {
+        while (true) {
+            System.out.println("Välj ett alternativ:");
+            System.out.println("1. Hämta alla elever från Java23");
+            System.out.println("2. Hämta alla elever från Java24");
+            System.out.println("3. Hämta alla elever från UX23");
+            System.out.println("4. Hämta alla elever från UX24");
+            System.out.println("5. Hämta alla elever grupperade per program och årskull");
+            System.out.println("0. Avsluta");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Konsumera newline
+
+            switch (choice) {
+                case 1:
+                    StudentClassYear.printClassYearDetails(1);
+                    break;
+
+                case 2:
+                    StudentClassYear.printClassYearDetails(2);
+                    break;
+
+                case 3:
+                    StudentClassYear.printClassYearDetails(3);
+                    break;
+
+                case 4:
+                    StudentClassYear.printClassYearDetails(4);
+                    break;
+
+                case 5:
+                    Map<String, List<Student>> groupedStudents = StudentClassYear.getAllStudentsGroupedByYearAndProgram();
+                    groupedStudents.forEach((group, students) -> {
+                        System.out.println(group + ":");
+                        students.forEach(student -> System.out.println(" - " + student.getForename() + " " + student.getSurname()));
+                    });
+                break;
+                case 0:
+                    System.out.println("Avslutar...");
+                    break;
+
+                default: System.out.println("Ogiltigt val, försök igen.");
+
+            }
+        }
+    }
+    }
+
+
+
+
+
+
+

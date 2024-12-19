@@ -38,7 +38,7 @@ public class Student {
     @jakarta.validation.constraints.NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "StudentClassYear", nullable = false)
-    private ClassYear studentClassYear;
+    private ClassYear StudentClassYear;
 
     public Student() {}
 
@@ -48,7 +48,7 @@ public class Student {
         this.surname = surname;
         this.studentAge = age;
         this.studentMail = email;
-        this.studentClassYear = studentClassYear;
+        this.StudentClassYear = studentClassYear;
     }
 
     public Integer getId() {
@@ -100,11 +100,11 @@ public class Student {
     }
 
     public ClassYear getStudentClassYear() {
-        return studentClassYear;
+        return StudentClassYear;
     }
 
     public void setStudentClassYear(ClassYear studentClassYear) {
-        this.studentClassYear = studentClassYear;
+        this.StudentClassYear = studentClassYear;
     }
 
 }

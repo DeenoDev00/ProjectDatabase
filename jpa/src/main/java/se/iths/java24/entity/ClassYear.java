@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "ClassYear", schema = "demo")
 public class ClassYear {
@@ -19,16 +22,22 @@ public class ClassYear {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ClassProgramID", nullable = false)
-
-
-
-
-
     private Program classProgramID;
 
-    public ClassYear(String classPeriod, Program classProgramID) {
+    @OneToMany(mappedBy = "StudentClassYear", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Student> students = new ArrayList<>();
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public ClassYear(String classPeriod, Program ClassProgramID) {
         this.classPeriod = classPeriod;
-        this.classProgramID = classProgramID;
+        this.classProgramID = ClassProgramID;
     }
 
     public ClassYear() {
