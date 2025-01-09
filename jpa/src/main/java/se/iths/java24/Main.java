@@ -244,7 +244,7 @@ public class Main {
 
                     for (Professor s : professors) {
                         System.out.println("Professor ID: " + s.getId());
-                        System.out.println("Professor First name: " + s.getForename() + " Surname: " + s.getSurname());
+                        System.out.println("Professor First name: " + s.getForename()+ " " + s.getSurname());
                         System.out.println("Professor Email: " + s.getprofessorEmail());
 
                         if (s.getPrograms() != null && !s.getPrograms().isEmpty()) {
@@ -528,7 +528,7 @@ public class Main {
                 break;
                 case 0:
                     System.out.println("Avslutar...");
-                    break;
+                    return;
 
                 default: System.out.println("Ogiltigt val, försök igen.");
 
